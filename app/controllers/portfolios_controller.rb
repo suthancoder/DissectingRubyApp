@@ -28,6 +28,14 @@ class PortfoliosController < ApplicationController
     @portfolio = Portfolio.new
   end
 
+  def destroy
+    @portfolio.destroy
+    respond_to do |format|
+      format.html { redirect_to portfolios_url, notice: 'Portfolio was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   def create
 
     @portfolio = Portfolio.new(portfolio_params)

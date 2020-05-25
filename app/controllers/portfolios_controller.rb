@@ -1,4 +1,6 @@
 class PortfoliosController < ApplicationController
+  before_action :set_portfolio, only: [:show, :edit, :update, :destroy]
+
   def index
     @portfolio_items = Portfolio.all
   end
@@ -6,6 +8,21 @@ class PortfoliosController < ApplicationController
   def show
   end
 
+  def edit
+  end
+
+  def update
+    respond_to do |format|
+      if @portfolio.update(portfolio_params)
+        # QUESTION: why does .update method work here .. where is it written? ACTIVE RECORD?
+        format.html { redirect_to @portfolio, notice: 'portfolio was successfully updated.' }
+        format.json { render :show, status: :ok, location: @portfolio }
+      else
+        format.html { render :edit }
+        format.json { render json: @portfolio.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   def new
     @portfolio = Portfolio.new
@@ -29,6 +46,10 @@ class PortfoliosController < ApplicationController
 end
 
 private
+
+def set_portfolio
+  @portfolio = Portfolio.find_by(id: params[:id])
+end
 
 def portfolio_params
   params.require(:portfolio).permit(:title, :subtitle, :body)

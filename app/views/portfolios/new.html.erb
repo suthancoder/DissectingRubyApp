@@ -11,5 +11,13 @@
   <%= f.label :body, placeholder: "body of portfolio" %>
  <%= f.text_field :body %>
 
+<ul>
+  <%= f.fields_for :technologies do |technology_form| %>
+    <%= technology_form.label :name %>
+    <%= technology_form.text_field :name %>
+  <% end %>
+</ul>
+
+
   <%= f.submit %>
 <% end %>

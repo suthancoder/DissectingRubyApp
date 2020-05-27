@@ -1,7 +1,10 @@
 class PortfoliosController < ApplicationController
   before_action :set_portfolio, only: [:show, :edit, :update, :destroy]
+  layout "portfolio"
 
   def index
+    @page_header = "Portfolios"
+    @seo_keywords = "Portfolio stuff and other key words"
     @portfolio_items = Portfolio.all
   end
 
@@ -9,13 +12,15 @@ class PortfoliosController < ApplicationController
   end
 
   def edit
-  end
+    3.times { @portfolio.technologies.build}
+
+    end
 
   def update
     respond_to do |format|
       if @portfolio.update(portfolio_params)
         # QUESTION: why does .update method work here .. where is it written? ACTIVE RECORD?
-        format.html { redirect_to @portfolio, notice: 'portfolio was successfully updated.' }
+        format.html { redirect_to portfolio_show_path(@portfolio), notice: 'portfolio was successfully updated.' }
         format.json { render :show, status: :ok, location: @portfolio }
       else
         format.html { render :edit }
@@ -30,6 +35,7 @@ class PortfoliosController < ApplicationController
   end
 
   def destroy
+    @portfolio.technologies.all.each {|t| t.destroy}
     @portfolio.destroy
     respond_to do |format|
       format.html { redirect_to portfolios_url, notice: 'Portfolio was successfully destroyed.' }

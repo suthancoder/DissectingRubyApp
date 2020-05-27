@@ -1,15 +1,3 @@
 <h1>Edit Portfolio</h1>
 
-<%= form_for(@portfolio) do |f| %>
-
- <%= f.label :title, placeholder: "Title of portfolio" %>
- <%= f.text_field :title %>
-
-<%= f.label :subtitle, placeholder: "Subtitle" %>
- <%= f.text_field :subtitle %>
-
-  <%= f.label :body, placeholder: "body of portfolio" %>
- <%= f.text_field :body %>
-
-  <%= f.submit %>
-<% end %>
+  <%= render "form", portfolio: @portfolio %>
